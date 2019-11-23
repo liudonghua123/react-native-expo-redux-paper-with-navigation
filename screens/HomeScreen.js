@@ -1,10 +1,17 @@
 import * as WebBrowser from 'expo-web-browser'
 import React from 'react'
 import { Image, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { useDispatch, useSelector } from 'react-redux'
+import { Button } from 'react-native-paper'
 
 import { MonoText } from '../components/StyledText'
+import { login, logout } from '../store/actions/Auth'
+import { isLoggedInSelector } from '../store/reducers/Auth'
 
 export default function HomeScreen() {
+ const isLoggedIn = useSelector(isLoggedInSelector)
+ const dispatch = useDispatch()
+
  return (
   <View style={styles.container}>
    <ScrollView style={styles.container} contentContainerStyle={styles.contentContainer}>
@@ -19,6 +26,16 @@ export default function HomeScreen() {
      <DevelopmentModeNotice />
 
      <Text style={styles.getStartedText}>Get started by opening</Text>
+
+     <Text style={styles.getStartedText}>{isLoggedIn ? "I'm LoggedIn" : 'go away!'}</Text>
+
+     <Button
+      mode="contained"
+      onPress={() => {
+       return isLoggedIn ? dispatch(logout()) : dispatch(login())
+      }}>
+      {isLoggedIn ? 'Logout' : 'Login'}
+     </Button>
 
      <View style={[styles.codeHighlightContainer, styles.homeScreenFilename]}>
       <MonoText>screens/HomeScreen.js</MonoText>
