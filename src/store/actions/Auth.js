@@ -1,4 +1,4 @@
-import { LOGIN, LOGOUT } from '../ActionTypes'
+import { LOGIN, LOGOUT } from '../../../constants/ActionTypes'
 
 export const login = () => ({
  type: LOGIN,
