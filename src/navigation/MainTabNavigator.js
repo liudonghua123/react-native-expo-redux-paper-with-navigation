@@ -3,70 +3,43 @@ import { Platform } from 'react-native'
 import { createStackNavigator, createBottomTabNavigator } from 'react-navigation'
 
 import TabBarIcon from '../components/TabBarIcon'
-import HomeScreen from '../screens/HomeScreen'
-import LinksScreen from '../screens/LinksScreen'
-import SettingsScreen from '../screens/SettingsScreen'
-
-const config = Platform.select({
- web: { headerMode: 'screen' },
- default: {},
-})
+import FeedScreen from '../screens/Feed'
+import SettingsScreen from '../screens/Settings'
 
 const HomeStack = createStackNavigator(
  {
-  Home: HomeScreen,
+  FeedScreen,
  },
- config
-)
-
-HomeStack.navigationOptions = {
- tabBarLabel: 'Home',
- tabBarIcon: ({ focused }) => (
-  <TabBarIcon
-   focused={focused}
-   name={Platform.OS === 'ios' ? `ios-information-circle${focused ? '' : '-outline'}` : 'md-information-circle'}
-  />
- ),
-}
-
-HomeStack.path = ''
-
-const LinksStack = createStackNavigator(
  {
-  Links: LinksScreen,
- },
- config
+  navigationOptions: {
+   tabBarLabel: 'Feed',
+   tabBarIcon: ({ focused }) => (
+    <TabBarIcon
+     focused={focused}
+     name={Platform.OS === 'ios' ? `ios-information-circle${focused ? '' : '-outline'}` : 'md-information-circle'}
+    />
+   ),
+  },
+ }
 )
-
-LinksStack.navigationOptions = {
- tabBarLabel: 'Links',
- tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-link' : 'md-link'} />,
-}
-
-LinksStack.path = ''
 
 const SettingsStack = createStackNavigator(
  {
-  Settings: SettingsScreen,
+  SettingsScreen,
  },
- config
+ {
+  navigationOptions: {
+   tabBarLabel: 'Settings',
+   tabBarIcon: ({ focused }) => (
+    <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-options' : 'md-options'} />
+   ),
+  },
+ }
 )
-
-SettingsStack.navigationOptions = {
- tabBarLabel: 'Settings',
- tabBarIcon: ({ focused }) => (
-  <TabBarIcon focused={focused} name={Platform.OS === 'ios' ? 'ios-options' : 'md-options'} />
- ),
-}
-
-SettingsStack.path = ''
 
 const tabNavigator = createBottomTabNavigator({
  HomeStack,
- LinksStack,
  SettingsStack,
 })
-
-tabNavigator.path = ''
 
 export default tabNavigator
